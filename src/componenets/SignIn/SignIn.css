@@ -37,6 +37,23 @@
     outline: none;
 }
 
+.signin-cancelbtn {
+    /* padding: 14px 20px; */
+    background-color: #f44336;
+    font-size: 20px;
+    color: white;
+    padding: 15px 20px;
+    margin: 20px 0;
+    border: none;
+    cursor: pointer;
+    width: 45%;
+    opacity: 0.9;
+}
+
+.signin-cancelbtn:hover {
+    opacity: 1;
+}
+
 .signin-btn {    
     background-color: #04AA6D;
     font-size: 20px;
@@ -45,7 +62,7 @@
     margin: 20px 0;
     border: none;
     cursor: pointer;
-    width: 90%;
+    width: 45%;
     opacity: 0.9;
 }
 
