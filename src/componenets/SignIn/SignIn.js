@@ -1,5 +1,6 @@
 import React from 'react';
 import './SignIn.css';
+import { auth, firestore } from '../../firebase/firebase.utils';
 
 class SignIn extends React.Component {
     constructor() {
@@ -30,7 +31,36 @@ class SignIn extends React.Component {
         this.setState({signInPassword: event.target.value});
     }
 
-    onSubmitSignIn = () => {
+    onSubmitSignIn = event => {
+        event.preventDefault();
+
+        const { signInEmail, signInPassword, isSignInTutor } = this.state;
+
+        const userRef = firestore.doc(`users/${signInEmail}`);
+
+        userRef.get().then((doc) => {            
+            console.log("isSignInTutor data: ", isSignInTutor)
+            console.log("isTutor data: ", doc.data().isTutor);
+            console.log("compare: ", isSignInTutor === doc.data().isTutor)
+            if (doc.exists && (isSignInTutor === doc.data().isTutor)) {            
+                try {                    
+                    auth.signInWithEmailAndPassword(signInEmail, signInPassword);
+                    this.setState({
+                        isSignInTutee: 'on',
+                        isSignInTutor: 'off',
+                        signInEmail: '',
+                        signInPassword: ''
+                    });
+                } catch (error) {
+                    console.log("signin error", error);
+                }
+                console.log("Document isTutor data:", doc.data().isTutor);
+            } else {
+                console.log("No such document!");
+            }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
+        });
     }
 
     render() {

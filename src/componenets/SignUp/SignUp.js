@@ -1,5 +1,6 @@
 import React from 'react';
 import './SignUp.css';
+import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 
 class SignUp extends React.Component {
     constructor() {
@@ -35,7 +36,28 @@ class SignUp extends React.Component {
         this.setState({password: event.target.value})
     }
 
-    onSubmitSignUp = () => {
+    onSubmitSignUp = async event => {
+        event.preventDefault();
+
+        const { name, email, password, isTutor } = this.state;
+
+        try {
+            const { user } = await auth.createUserWithEmailAndPassword(
+                email,
+                password
+            );
+
+            await createUserProfileDocument(user, { name, isTutor });
+
+            this.setState({
+                isTutor: 'off',
+                name: '',
+                email: '',
+                password: ''
+            });
+        } catch (error) {
+            console.log("error signup " + error);
+        }
     }
 
     render() {

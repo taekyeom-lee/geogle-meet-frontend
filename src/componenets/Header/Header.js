@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from "react-router-dom"
 import logo from '../../img/logo.svg';
 import './Header.css';
+import { auth } from '../../firebase/firebase.utils';
 
-const Header = () => {
+const Header = ({ currentUser }) => {
     return (
         <div className='header'>
             <div className='header-sub'>
@@ -13,8 +14,24 @@ const Header = () => {
                 </Link>
                 
                 <div className='header-options'>
-                    <Link to="/signin" className='header-option'>Sign In</Link>
-                    <Link to="/signup" className='header-option'>Sign Up</Link>
+                    {
+                        currentUser ? (
+                            <div 
+                                className='header-option' 
+                                onClick={() => 
+                                    auth.signOut().then(() => {
+                                        console.log("signout success")
+                                    }).catch((error) => {
+                                        console.log("signout fail")
+                                    })
+                                }>Sign out</div>                            
+                        ) : (
+                            <div>                                
+                                <Link to="/signin" className='header-option'>Sign In</Link>
+                                <Link to="/signup" className='header-option'>Sign Up</Link>
+                            </div>
+                        ) 
+                    }
                 </div>
             </div>            
         </div>
