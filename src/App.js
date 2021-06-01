@@ -3,7 +3,6 @@ import CardList from './componenets/CardList/CardList';
 import SignIn from './componenets/SignIn/SignIn';
 import SignUp from './componenets/SignUp/SignUp';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { tutor } from './tutor';
 import './App.css';
 import React from 'react';
 import { auth } from './firebase/firebase.utils';
@@ -22,7 +21,6 @@ class App extends React.Component {
   componentDidMount() {
     this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
       this.setState({ currentUser: user})
-      console.log(this.state);
     })
   }
 
@@ -39,7 +37,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/">
               <div className="container">
-                <CardList className="item" tutor={tutor}/>
+                <CardList className="item"/>
               </div>
             </Route>
             <Route path="/signup">
