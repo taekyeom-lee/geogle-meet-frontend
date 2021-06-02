@@ -1,12 +1,12 @@
 import React from 'react';
 import './SignUp.css';
 import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+import { withRouter } from 'react-router-dom';
 
 class SignUp extends React.Component {
     constructor() {
         super();
         this.state = {
-            isTutee: 'on',
             isTutor: 'off',
             name: '',
             email: '',
@@ -15,13 +15,11 @@ class SignUp extends React.Component {
     }
 
     onTuteeCheckChange = (event) => {
-        this.setState({isTutee: event.target.value})
         this.setState({isTutor: "off"})
     }
 
     onTutorCheckChange = (event) => {
         this.setState({isTutor: event.target.value})
-        this.setState({isTutee: "off"})
     }
 
     onNameChange = (event) => {
@@ -38,23 +36,20 @@ class SignUp extends React.Component {
 
     onSubmitSignUp = async event => {
         event.preventDefault();
-
         const { name, email, password, isTutor } = this.state;
-
         try {
             const { user } = await auth.createUserWithEmailAndPassword(
                 email,
                 password
             );
-
             await createUserProfileDocument(user, { name, isTutor });
-
             this.setState({
                 isTutor: 'off',
                 name: '',
                 email: '',
                 password: ''
             });
+            this.props.history.push('/')
         } catch (error) {
             console.log("error signup " + error);
         }
@@ -139,4 +134,4 @@ class SignUp extends React.Component {
     }
 }
 
-export default SignUp;
+export default withRouter(SignUp);

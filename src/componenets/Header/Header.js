@@ -11,8 +11,7 @@ const Header = ({ currentUser }) => {
                 <Link to="/" className='header-logo'>
                     <img className='header-img' alt="logo" src={logo} />
                     <p className='header-name'>Geogle Meet</p>
-                </Link>
-                
+                </Link>                
                 <div className='header-options'>
                     {
                         currentUser ? (
@@ -20,9 +19,9 @@ const Header = ({ currentUser }) => {
                                 className='header-option' 
                                 onClick={() => 
                                     auth.signOut().then(() => {
-                                        console.log("signout success")
+                                        alert("signout success")
                                     }).catch((error) => {
-                                        console.log("signout fail")
+                                        console.log("signout error ", error)
                                     })
                                 }>Sign out</div>                            
                         ) : (
