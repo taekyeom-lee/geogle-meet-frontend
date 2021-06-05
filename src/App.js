@@ -2,6 +2,7 @@ import Header from './componenets/Header/Header';
 import CardList from './componenets/CardList/CardList';
 import SignIn from './componenets/SignIn/SignIn';
 import SignUp from './componenets/SignUp/SignUp';
+import Main from './componenets/Main/Main';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import React from 'react';
@@ -37,7 +38,15 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/">
               <div className="container">
-                <CardList className="item"/>
+                {
+                  currentUser 
+                  ? 
+                      <CardList className="item"/>
+
+                  : (                  
+                    <Main />
+                  )
+                }              
               </div>
             </Route>
             <Route path="/signup">
